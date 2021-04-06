@@ -25,7 +25,7 @@ void printPuzzle(int* puzzle) {
 
 int checkPuzzle(int* puzzle) {
 	for (int i = 0; i < 24; i++) {
-		if (puzzle[i] != i) return 0;
+		if (puzzle[i] != i+1) return 0;
 	}
 	return 1;
 }

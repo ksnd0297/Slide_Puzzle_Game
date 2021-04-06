@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="퍼즐게임.c">
+    <ClCompile Include="Sliding Puzzle.c">
       <Filter>리소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
