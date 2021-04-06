@@ -4,33 +4,7 @@
 #include <conio.h>
 #pragma warning(disable : 4996)
 
-
-int main() {
-	int puzzle[25];
-	char input;
-
-	printScreen();
-	init(puzzle);
-
-	while (1) {
-		scanf("%c", &input);
-		switch (input) {
-		case '1':
-			while (1) {
-				printPuzzle(puzzle);
-				if (checkPuzzle(puzzle)) {
-					printf("성공 !\n");
-					break;
-				}
-				if (inputKey(puzzle)) break;
-			}
-		case '0':
-			printf("게임을 종료합니다. \n");
-			return 0;
-		}
-	}
-
-}
+int point = 24;
 
 void printScreen() {
 	printf("%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 1, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2);
@@ -42,7 +16,7 @@ void printScreen() {
 	printf("0. 게임 종료 \n");
 }
 
-int printPuzzle(int* puzzle) {
+void printPuzzle(int* puzzle) {
 	system("cls");
 	printf("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 1, 6, 6, 22, 6, 6, 22, 6, 6, 22, 6, 6, 22, 6, 6, 2);
 	for (int i = 0; i < 5; i++) printf("%c%2d%c%2d%c%2d%c%2d%c%2d%c\n", 5, puzzle[i * 5 + 0], 5, puzzle[i * 5 + 1], 5, puzzle[i * 5 + 2], 5, puzzle[i * 5 + 3], 5, puzzle[i * 5 + 4], 5);
@@ -56,6 +30,9 @@ int checkPuzzle(int* puzzle) {
 	return 1;
 }
 
+int inputKey(int* puzzle) {
+	char key;
+	int temp;
 
 	while (1) {
 		printf("입력 (0) 종료 :");
@@ -75,7 +52,7 @@ int checkPuzzle(int* puzzle) {
 				puzzle[point] = puzzle[point - 1];
 				puzzle[point - 1] = temp;
 				point -= 1;
-}
+			}
 			return 0;
 		case 77:
 			if (point % 5 != 4) {
@@ -101,7 +78,7 @@ int checkPuzzle(int* puzzle) {
 	}
 }
 
-int init(int* puzzle) {
+void init(int* puzzle) {
 	srand((unsigned int)time(NULL)); // 매번 실행마다 다른 랜덤값 생성
 	int sour, dest; //랜덤 생성을 위한 숫자 
 	int temp; // puzzle[sour] 과 puzzle[dest]의 위치를 바꾸기 위한 임시 공간
@@ -111,7 +88,7 @@ int init(int* puzzle) {
 	for (int i = 0; i < 100; i++) {
 		sour = rand() % 25;
 		dest = rand() % 25;
-		
+
 		if (puzzle[sour] != 0 && puzzle[dest] != 0) {
 			temp = puzzle[sour];
 			puzzle[sour] = puzzle[dest];
@@ -119,5 +96,31 @@ int init(int* puzzle) {
 		}
 	}
 	puzzle[0] = puzzle[24]; // 0의 위치 초기화
+	puzzle[24] = 0;
+}
 
+int main() {
+	int puzzle[25];
+	char input;
+
+	printScreen();
+	init(puzzle);
+
+	while (1) {
+		input = _getch();
+		switch (input) {
+		case '1':
+			while (1) {
+				printPuzzle(puzzle);
+				if (checkPuzzle(puzzle)) {
+					printf("성공 !\n");
+					break;
+				}
+				if (inputKey(puzzle)) break;
+			}
+		case '0':
+			printf("게임을 종료합니다. \n");
+			return 0;
+		}
+	}
 }
