@@ -4,7 +4,33 @@
 #include <conio.h>
 #pragma warning(disable : 4996)
 
-int point = 24; // 맨 처음 0의 위치
+
+int main() {
+	int puzzle[25];
+	char input;
+
+	printScreen();
+	init(puzzle);
+
+	while (1) {
+		scanf("%c", &input);
+		switch (input) {
+		case '1':
+			while (1) {
+				printPuzzle(puzzle);
+				if (checkPuzzle(puzzle)) {
+					printf("성공 !\n");
+					break;
+				}
+				if (inputKey(puzzle)) break;
+			}
+		case '0':
+			printf("게임을 종료합니다. \n");
+			return 0;
+		}
+	}
+
+}
 
 void printScreen() {
 	printf("%c%c%c%c%c%c%c%c%c%c%c%c%c\n", 1, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2);
@@ -30,9 +56,6 @@ int checkPuzzle(int* puzzle) {
 	return 1;
 }
 
-int inputKey(int* puzzle) {
-	char key;
-	int temp;
 
 	while (1) {
 		printf("입력 (0) 종료 :");
@@ -52,7 +75,7 @@ int inputKey(int* puzzle) {
 				puzzle[point] = puzzle[point - 1];
 				puzzle[point - 1] = temp;
 				point -= 1;
-			}
+}
 			return 0;
 		case 77:
 			if (point % 5 != 4) {
@@ -84,10 +107,11 @@ int init(int* puzzle) {
 	int temp; // puzzle[sour] 과 puzzle[dest]의 위치를 바꾸기 위한 임시 공간
 
 	for (int i = 0; i < 25; i++) puzzle[i] = i;
+
 	for (int i = 0; i < 100; i++) {
 		sour = rand() % 25;
 		dest = rand() % 25;
-
+		
 		if (puzzle[sour] != 0 && puzzle[dest] != 0) {
 			temp = puzzle[sour];
 			puzzle[sour] = puzzle[dest];
@@ -95,33 +119,5 @@ int init(int* puzzle) {
 		}
 	}
 	puzzle[0] = puzzle[24]; // 0의 위치 초기화
-	puzzle[24] = 0; // 마지막 위치 0 설정
-}
-
-int main() {
-	int puzzle[25];
-	char input;
-
-	printScreen();
-	init(puzzle);
-
-	while (1) {
-		input = _getch();
-		switch (input) {
-		case '1':
-			while (1) {
-				printPuzzle(puzzle);
-				if (checkPuzzle(puzzle)) {
-					system("cls");
-					printf("성공 !\n");
-					break;
-				}
-				if (inputKey(puzzle)) break;
-			}
-		case '0':
-			printf("게임을 종료합니다. \n");
-			return 0;
-		}
-	}
 
 }
